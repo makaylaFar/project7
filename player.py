@@ -4,12 +4,12 @@ from direct.particles.ParticleEffect import ParticleEffect
 # regex module import for string editing.
 import re
 from collideObjectBase import *
-from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionHandlerEvent
 from direct.task import Task
 from typing import Callable
+from panda3d.core import *
 
 class spaceShip(SphereCollideObject):
-    def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None]):
+    def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None], traverser: CollisionTraverser):
         super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, 0, 2)
         self.taskManager = task
         self.render = render
@@ -27,16 +27,18 @@ class spaceShip(SphereCollideObject):
         self.reloadTime = .25
         self.missileDistance = 4000 # until it explodes
         self.missileBay = 1 # only 1 missile in the bay to be
-        
+
+        self.traverser = traverser
+
+        #self.traverser = CollisionTraverser()
+        self.handler = CollisionHandlerEvent()
+
+        self.handler.addInPattern('into')
+        self.accept('into', self.HandleInto)
+
         self.taskManager.add(self.CheckIntervals, 'checkMissiles', 34)
         self.cntExplode = 0
         self.explodeIntervals = {}
-
-        self.traverser = CollisionTraverser()
-        self.handler = CollisionHandlerEvent()
-
-        self.handler.addInPattern('info')
-        self.accept('into', self.HandleInto)
 
         self.enableHUD()
 
