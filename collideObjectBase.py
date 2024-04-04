@@ -40,5 +40,3 @@ class SphereCollideObject(CollidableObject):
 
 
 
-
-

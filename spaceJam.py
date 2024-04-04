@@ -7,6 +7,8 @@ import spaceJamClasses as spaceJamClasses
 from collideObjectBase import PlacedObject
 from panda3d.core import CollisionTraverser, CollisionHandlerPusher
 import player as player
+from direct.task.Task import TaskManager
+import defensePaths as defensePaths
 
 
 class spaceJam(ShowBase):
@@ -80,6 +82,8 @@ class spaceJam(ShowBase):
         self.ship = player.spaceShip(self.loader, "./assets/spaceShip/Dumbledore.egg", self.render,'ship', "./assets/spaceShip/spacejet_C.png", (0, 0, 0), 11, self.taskMgr, self.render, self.accept, self.cTrav)
         self.spaceStation = spaceJamClasses.spaceStation(self.loader, "./assets/spaceStation/spaceStation.egg", self.render,'ship', "./assets/spaceStation/SpaceStation1_Dif2.png", (-3100, 200, 2000), 10)
 
+        self.sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./assets/DroneDefender/DroneDefender.obj", self.render, "Drone", 6.0, "./assets/DroneDefender/octotoad1_auv.png", self.planet5, 900, "MLB", self.ship)
+        self.sentinal2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./assets/DroneDefender/DroneDefender.obj", self.render, "Drone", 6.0, "./assets/DroneDefender/octotoad1_auv.png", self.planet1, 500, "MLB", self.ship)
         
         
         self.SetCamera()    

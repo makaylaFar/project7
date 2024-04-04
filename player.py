@@ -41,6 +41,9 @@ class spaceShip(SphereCollideObject):
         self.cntExplode = 0
         self.explodeIntervals = {}
 
+        self.fireSound = loader.loadSfx("./assets/soundEffects/pew-pew.mp3")
+        self.fireSound.setVolume(0.5)
+
         self.enableHUD()
 
     def CheckIntervals(self, task):
@@ -197,6 +200,7 @@ class spaceShip(SphereCollideObject):
             Missile.Intervals[tag].start()
 
             self.traverser.addCollider(currentMissile.collisionNode, self.handler)
+            self.fireSound.play()
 
         else:
             # if we aren't reloading, we want to start reloading.
