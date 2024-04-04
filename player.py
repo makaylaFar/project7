@@ -28,6 +28,7 @@ class spaceShip(SphereCollideObject):
         self.missileDistance = 4000 # until it explodes
         self.missileBay = 1 # only 1 missile in the bay to be
         self.ParticleEffectTime = .3
+        self.SetParticles()
 
         self.traverser = traverser
 
@@ -243,7 +244,6 @@ class spaceShip(SphereCollideObject):
         # unity also has a find method, yet it is very inefficeint if used anywhere but at the beginning of the program.
         nodeID = self.render.find(hitID)
         nodeID.detachNode()
-        self.SetParticles()
 
         # start the explosion
         self.explodeNode.setPos(hitPosition)
